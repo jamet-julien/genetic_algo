@@ -20,9 +20,9 @@ class ElementGenetic {
   /**
    *
    */
-  constructor() {
+  constructor( oDna ) {
     this.fitness = 0;
-    this.dna     = new DNA( [], ElementGenetic.buildDNA);
+    this.dna     = oDna || new DNA( [], ElementGenetic.buildDNA);
   }
 
   /**

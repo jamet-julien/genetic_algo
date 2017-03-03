@@ -14,11 +14,11 @@ import ElementGenetic  from './genetic/elementgenetic.js';
     \_/_/   \_\_| \_\___/_/   \_\____/|_____|_____|____/
 **********************************************************/
 
-var W             = window.innerWidth,
-    H             = window.innerHeight,
-    PHASE         = new Phase('setup'),
+var PHASE         = new Phase('setup'),
 
-    oPopulation   = new Population(),
+    oPopulation   = new Population(
+      ()=> new ElementGenetic(), 10
+    ),
 
     oPhase = {
       setup : fnSetup,
@@ -41,8 +41,6 @@ var W             = window.innerWidth,
  * @return {[type]}       [description]
  */
 function fnSetup( iTime){
-
-
   Timer.restart();
   this.setPhase( 'draw');
 }
@@ -54,7 +52,14 @@ function fnSetup( iTime){
  * @return {[type]}       [description]
  */
 function fnDraw( iTime){
+  oPopulation.evaluate();
 
+  oPopulation.selection(
+    ( oDna)=> new ElementGenetic( oDna),
+    ElementGenetic.completeDNA
+   );
+   
+  oPopulation.run();
 }
 
 

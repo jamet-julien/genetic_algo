@@ -41,7 +41,7 @@ class Population {
   /**
    *
    */
-  getRandomElement(){
+  _getRandomElement(){
     var oElement,
         iRand, iMax = 100000,
         iLen = this.element.length - 1;
@@ -66,14 +66,14 @@ class Population {
   /**
    *
    */
-  selection( fGetElement) {
+  selection( fGetElement, fCompleteDNA) {
 
     var element = [], oParentA ,  oParentB,  oDNAchild, i = 0;
 
     for (; i < this.element.length; i++) {
 
-      oParentA = this.getRandomElement();
-      oParentB = this.getRandomElement();
+      oParentA = this._getRandomElement();
+      oParentB = this._getRandomElement();
 
       oDNAchild   = oDNAparentA.dna.crossover( oDNAparentB.dna);
       oDNAchild.mutation( fGetElement);
