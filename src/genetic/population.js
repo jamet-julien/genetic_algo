@@ -25,8 +25,8 @@ class Population {
     var maxfit = 0,  i = 0, maxFitArray = [];
 
     for (; i < this.popsize; i++){
-      this.element[i].calcFitness();
-      maxFitArray.push( this.element[i].fitness)
+      this.element[ i ].calcFitness();
+      maxFitArray.push( this.element[ i ].fitness);
     }
 
     maxfit = Math.max.apply( null, maxFitArray);
@@ -36,6 +36,9 @@ class Population {
       this.element[ i ].fitness = map( this.element[ i ].fitness, 0, maxfit, 0, 1);
     }
 
+    return this.element;
+
+
   }
 
   /**
@@ -43,19 +46,20 @@ class Population {
    */
   _getRandomElement(){
     var oElement,
-        iRand, iMax = 100000,
+        iRand, iRandValue, iMax = 10000000,
         iLen = this.element.length - 1;
 
     while( true){
 
-      iRand = randomInt( 0, iLen);
+      iRand      = randomInt( 0, iLen);
+      iRandValue = Math.random();
 
-      if( Math.random() < this.element[ iRand ].fitness){
+      if( iRandValue <= this.element[ iRand ].fitness){
         return this.element[ iRand ];
       }
 
       if(iMax <= 0){
-        return {dna:null};
+        return { dna : null };
       }
 
       iMax--;
@@ -75,13 +79,15 @@ class Population {
       oParentA = this._getRandomElement();
       oParentB = this._getRandomElement();
 
-      oDNAchild   = oDNAparentA.dna.crossover( oDNAparentB.dna);
-      oDNAchild.mutation( fGetElement);
+      oDNAchild   = oParentA.dna.crossover( oParentB.dna);
+      oDNAchild.mutation( fCompleteDNA);
 
       element[ i ] = fGetElement( oDNAchild);
     }
 
     this.element = element;
+
+    return this.element;
   }
 
   /**

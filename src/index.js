@@ -4,7 +4,7 @@ import Timer           from './class/timer.js';
 
 
 import Population      from './genetic/population.js';
-import ElementGenetic  from './genetic/elementgenetic.js';
+import SearchText      from './class/SearchText.js';
 
 /*********************************************************
  __     ___    ____  ___    _    ____  _     _____ ____
@@ -15,14 +15,17 @@ import ElementGenetic  from './genetic/elementgenetic.js';
 **********************************************************/
 
 var PHASE         = new Phase('setup'),
+    TARGET        = 'On sait depuis longtemps que travailler avec du texte lisible',
+    TARGETDOM     = document.getElementById('target'),
 
     oPopulation   = new Population(
-      ()=> new ElementGenetic(), 10
+      ()=> new SearchText( TARGET, TARGETDOM), 500
     ),
 
     oPhase = {
       setup : fnSetup,
-      draw  : fnDraw
+      draw  : fnDraw,
+      win   : fnWin
     };
 
 
@@ -41,6 +44,7 @@ var PHASE         = new Phase('setup'),
  * @return {[type]}       [description]
  */
 function fnSetup( iTime){
+  console.time('timerName');
   Timer.restart();
   this.setPhase( 'draw');
 }
@@ -52,14 +56,43 @@ function fnSetup( iTime){
  * @return {[type]}       [description]
  */
 function fnDraw( iTime){
-  oPopulation.evaluate();
 
-  oPopulation.selection(
-    ( oDna)=> new ElementGenetic( oDna),
-    ElementGenetic.completeDNA
-   );
-   
-  oPopulation.run();
+  var self = this, aGene = [], iLen, i = 0, bContinue = true;
+
+  console.count();
+
+  aGene = oPopulation.evaluate();
+  iLen  = aGene.length;
+
+  for(; i < iLen; i++){
+      if( aGene[ i ].win){
+        aGene[ i ].draw();
+        console.log( aGene[ i ].dna.gene);
+        bContinue = false;
+        this.setPhase( 'win');
+
+      }
+  }
+
+  if( bContinue){
+    oPopulation.selection(
+      ( oDna)=> new SearchText( TARGET, TARGETDOM, oDna),
+      SearchText.completeDNA
+     );
+
+    oPopulation.run();
+  }
+}
+
+
+/**
+ * [fnDraw description]
+ * @param  {[type]} iTime [description]
+ * @return {[type]}       [description]
+ */
+function fnWin( iTime){
+  console.timeEnd('timerName')
+  Timer.stop();
 }
 
 
@@ -74,7 +107,7 @@ function fnDraw( iTime){
 
 PHASE.computePhase( oPhase);
 
-Timer.setCadence( 12)
+Timer.setCadence( 50)
      .run( ( iTime) => {
         PHASE.run( iTime);
       }).play();

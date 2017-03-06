@@ -31,6 +31,7 @@ class DNA {
     return new DNA( aNewGene);
   }
 
+
   /**
    *
    */
