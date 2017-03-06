@@ -19,7 +19,7 @@ var PHASE         = new Phase('setup'),
     TARGETDOM     = document.getElementById('target'),
 
     oPopulation   = new Population(
-      ()=> new SearchText( TARGET, TARGETDOM), 500
+      ()=> new SearchText( TARGET, TARGETDOM), 1000
     ),
 
     oPhase = {
@@ -107,7 +107,7 @@ function fnWin( iTime){
 
 PHASE.computePhase( oPhase);
 
-Timer.setCadence( 50)
+Timer.setCadence( 12)
      .run( ( iTime) => {
         PHASE.run( iTime);
       }).play();

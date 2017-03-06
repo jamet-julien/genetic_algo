@@ -927,7 +927,7 @@
 	    TARGETDOM = document.getElementById('target'),
 	    oPopulation = new _population2.default(function () {
 	  return new _SearchText2.default(TARGET, TARGETDOM);
-	}, 500),
+	}, 1000),
 	    oPhase = {
 	  setup: fnSetup,
 	  draw: fnDraw,
@@ -978,7 +978,7 @@
 
 	PHASE.computePhase(oPhase);
 
-	_timer2.default.setCadence(50).run(function (iTime) {
+	_timer2.default.setCadence(12).run(function (iTime) {
 	  PHASE.run(iTime);
 	}).play();
 
@@ -1218,7 +1218,7 @@
 	        iRand = (0, _utility.randomInt)(0, iLen);
 	        iRandValue = Math.random();
 
-	        if (iRandValue < this.element[iRand].fitness) {
+	        if (iRandValue <= this.element[iRand].fitness) {
 	          return this.element[iRand];
 	        }
 
