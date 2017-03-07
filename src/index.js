@@ -15,11 +15,11 @@ import SearchText      from './class/SearchText.js';
 **********************************************************/
 
 var PHASE         = new Phase('setup'),
-    TARGET        = 'On sait depuis longtemps que travailler avec du texte lisible',
+    TARGET        = 'To or not to be',
     TARGETDOM     = document.getElementById('target'),
 
     oPopulation   = new Population(
-      ()=> new SearchText( TARGET, TARGETDOM), 1000
+      ()=> new SearchText( TARGET, TARGETDOM), 200
     ),
 
     oPhase = {
@@ -58,8 +58,6 @@ function fnSetup( iTime){
 function fnDraw( iTime){
 
   var self = this, aGene = [], iLen, i = 0, bContinue = true;
-
-  console.count();
 
   aGene = oPopulation.evaluate();
   iLen  = aGene.length;

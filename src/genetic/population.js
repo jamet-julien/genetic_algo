@@ -22,7 +22,7 @@ class Population {
    */
   evaluate(){
 
-    var maxfit = 0,  i = 0, maxFitArray = [];
+    var maxfit = 0,  i = 0, iValue = 0, maxFitArray = [], maxFitArrayConvert = [];
 
     for (; i < this.popsize; i++){
       this.element[ i ].calcFitness();
@@ -32,8 +32,11 @@ class Population {
     maxfit = Math.max.apply( null, maxFitArray);
     i      = 0;
 
+
     for (; i < this.popsize; i++) {
-      this.element[ i ].fitness = map( this.element[ i ].fitness, 0, maxfit, 0, 1);
+      iValue = map( this.element[ i ].fitness, 0, maxfit, 0, 1);
+      maxFitArrayConvert.push(iValue)
+      this.element[ i ].fitness = iValue;
     }
 
     return this.element;
@@ -47,7 +50,7 @@ class Population {
   _getRandomElement(){
     var oElement,
         iRand, iRandValue, iMax = 10000000,
-        iLen = this.element.length - 1;
+        iLen = this.element.length-1;
 
     while( true){
 

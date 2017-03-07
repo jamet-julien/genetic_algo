@@ -9,7 +9,7 @@ class SearchText extends ElementGenetic {
      */
     static completeDNA( iPos){
 
-      var sLib = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789";
+      var sLib = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789,.:éè";
       return sLib.charAt(Math.floor(Math.random() * sLib.length));
 
     }
@@ -47,19 +47,19 @@ class SearchText extends ElementGenetic {
      *
      */
     calcFitness(){
-      var iLen    = this.target.length;
+      var iLen    = this.target.length, score = 0;
 
       this.fitness = 0;
       this.win     = false;
 
       for(;iLen--;){
-        if( this.target[ iLen ] == this.dna.gene[ iLen ]){
-          this.fitness++;
-
+        if( this.target.charAt( iLen ) == this.dna.gene[ iLen ]){
+          score++;
         }
       }
 
-      this.win = (this.target.length == this.fitness);
+      this.fitness = Math.pow( score, 4);
+      this.win     = (this.target.length == score);
 
     }
 

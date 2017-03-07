@@ -923,11 +923,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var PHASE = new _phase2.default('setup'),
-	    TARGET = 'On sait depuis longtemps que travailler avec du texte lisible',
+	    TARGET = 'To or not to be',
 	    TARGETDOM = document.getElementById('target'),
 	    oPopulation = new _population2.default(function () {
 	  return new _SearchText2.default(TARGET, TARGETDOM);
-	}, 1000),
+	}, 200),
 	    oPhase = {
 	  setup: fnSetup,
 	  draw: fnDraw,
@@ -947,8 +947,6 @@
 	      iLen,
 	      i = 0,
 	      bContinue = true;
-
-	  console.count();
 
 	  aGene = oPopulation.evaluate();
 	  iLen = aGene.length;
@@ -1188,7 +1186,9 @@
 
 	      var maxfit = 0,
 	          i = 0,
-	          maxFitArray = [];
+	          iValue = 0,
+	          maxFitArray = [],
+	          maxFitArrayConvert = [];
 
 	      for (; i < this.popsize; i++) {
 	        this.element[i].calcFitness();
@@ -1199,7 +1199,9 @@
 	      i = 0;
 
 	      for (; i < this.popsize; i++) {
-	        this.element[i].fitness = (0, _utility.map)(this.element[i].fitness, 0, maxfit, 0, 1);
+	        iValue = (0, _utility.map)(this.element[i].fitness, 0, maxfit, 0, 1);
+	        maxFitArrayConvert.push(iValue);
+	        this.element[i].fitness = iValue;
 	      }
 
 	      return this.element;
@@ -1360,7 +1362,7 @@
 	    key: 'completeDNA',
 	    value: function completeDNA(iPos) {
 
-	      var sLib = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789";
+	      var sLib = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789,.:éè";
 	      return sLib.charAt(Math.floor(Math.random() * sLib.length));
 	    }
 	  }]);
@@ -1393,18 +1395,20 @@
 	  }, {
 	    key: 'calcFitness',
 	    value: function calcFitness() {
-	      var iLen = this.target.length;
+	      var iLen = this.target.length,
+	          score = 0;
 
 	      this.fitness = 0;
 	      this.win = false;
 
 	      for (; iLen--;) {
-	        if (this.target[iLen] == this.dna.gene[iLen]) {
-	          this.fitness++;
+	        if (this.target.charAt(iLen) == this.dna.gene[iLen]) {
+	          score++;
 	        }
 	      }
 
-	      this.win = this.target.length == this.fitness;
+	      this.fitness = Math.pow(score, 4);
+	      this.win = this.target.length == score;
 	    }
 	  }, {
 	    key: 'update',
@@ -1522,7 +1526,7 @@
 	    key: 'mutation',
 	    value: function mutation(fgetValue, iProba) {
 	      var i = 0,
-	          _iProba = iProba || 0.001;
+	          _iProba = iProba || .01;
 
 	      for (; i < this.gene.length; i++) {
 	        if (Math.random() < _iProba) {

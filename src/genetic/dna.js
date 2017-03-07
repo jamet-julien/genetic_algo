@@ -36,8 +36,8 @@ class DNA {
    *
    */
   mutation( fgetValue, iProba){
-    var i = 0,
-      _iProba = iProba || 0.001;
+    var i     = 0,
+      _iProba = iProba || .01;
 
     for (; i < this.gene.length; i++) {
       if( Math.random() < _iProba) {
