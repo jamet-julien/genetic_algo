@@ -72,7 +72,7 @@ class Population {
   /**
    *
    */
-  selection( fGetElement, fCompleteDNA) {
+  selection( fFactoryElement, fUpdateDNA) {
 
     var element = [], oParentA ,  oParentB,  oDNAchild, i = 0;
 
@@ -82,9 +82,9 @@ class Population {
       oParentB = this._getRandomElement();
 
       oDNAchild   = oParentA.dna.crossover( oParentB.dna);
-      oDNAchild.mutation( fCompleteDNA);
+      oDNAchild.mutation( fUpdateDNA);
 
-      element[ i ] = fGetElement( oDNAchild);
+      element[ i ] = fFactoryElement( oDNAchild);
     }
 
     this.element = element;
