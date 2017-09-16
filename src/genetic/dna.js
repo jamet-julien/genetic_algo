@@ -1,4 +1,4 @@
-import {randomInt} from '../lib/utility.js';
+import {map} from '../lib/utility.js';
 
 class DNA {
 
@@ -23,7 +23,7 @@ class DNA {
    */
   crossover( oDNAPartner){
     var aNewGene = [],
-        iMid     = randomInt( 0, this.gene.length - 1);
+        iMid     = Math.round( map( Math.random(), 0, 1, 0,  this.gene.length - 1));
 
     aNewGene = this.gene.slice( 0, iMid)
                         .concat( oDNAPartner.gene.slice( iMid, oDNAPartner.gene.length) );

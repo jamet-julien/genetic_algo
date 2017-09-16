@@ -33,14 +33,12 @@ class ElementGenetic {
   /**
    *
    */
-  update(){
-  }
+  update(){}
 
   /**
    *
    */
-  draw(){
-  }
+  draw(){}
 
 }
 

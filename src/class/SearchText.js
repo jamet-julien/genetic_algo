@@ -7,10 +7,10 @@ class SearchText extends ElementGenetic {
     /**
      *
      */
-    static completeDNA( iPos){
+    static completeDNA(){
 
       var sLib = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz0123456789,.:éè";
-      return sLib.charAt(Math.floor(Math.random() * sLib.length));
+      return sLib.charAt( Math.floor( Math.random() * sLib.length));
 
     }
 
@@ -59,7 +59,7 @@ class SearchText extends ElementGenetic {
       }
 
       this.fitness = Math.pow( score, 4);
-      this.win     = (this.target.length == score);
+      this.win     = ( this.target.length == score);
 
     }
 

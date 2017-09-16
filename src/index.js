@@ -15,7 +15,7 @@ import SearchText      from './class/SearchText.js';
 **********************************************************/
 
 var PHASE         = new Phase('setup'),
-    TARGET        = 'To or not to be',
+    TARGET        = 'To be or not to be',
     TARGETDOM     = document.getElementById('target'),
 
     oPopulation   = new Population(

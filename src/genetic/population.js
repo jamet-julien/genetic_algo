@@ -1,4 +1,4 @@
-import {randomInt, map} from '../lib/utility.js';
+import {map} from '../lib/utility.js';
 
 
 class Population {
@@ -9,6 +9,7 @@ class Population {
   constructor( fGetElement, popsize){
 
     this.element = [];
+    this.maxfit  = 0;
     this.popsize = popsize || 25;
 
     for (var i = 0; i < this.popsize; i++) {
@@ -22,22 +23,19 @@ class Population {
    */
   evaluate(){
 
-    var maxfit = 0,  i = 0, iValue = 0, maxFitArray = [], maxFitArrayConvert = [];
+    var i                  = 0,
+        iValue             = 0,
+        maxFitArray        = [],
+        maxFitArrayConvert = [];
+
+    this.maxfit = 0;
 
     for (; i < this.popsize; i++){
       this.element[ i ].calcFitness();
       maxFitArray.push( this.element[ i ].fitness);
     }
 
-    maxfit = Math.max.apply( null, maxFitArray);
-    i      = 0;
-
-
-    for (; i < this.popsize; i++) {
-      iValue = map( this.element[ i ].fitness, 0, maxfit, 0, 1);
-      maxFitArrayConvert.push(iValue)
-      this.element[ i ].fitness = iValue;
-    }
+    this.maxfit = Math.max.apply( null, maxFitArray);
 
     return this.element;
 
@@ -49,15 +47,16 @@ class Population {
    */
   _getRandomElement(){
     var oElement,
-        iRand, iRandValue, iMax = 10000000,
+        iRand, iRandValue, iMax = 10000000, iFitness = 0,
         iLen = this.element.length-1;
 
     while( true){
 
-      iRand      = randomInt( 0, iLen);
+      iRand      = Math.round( map( Math.random(), 0, 1, 0, iLen));
       iRandValue = Math.random();
+      iFitness   = map( this.element[ iRand ].fitness, 0, this.maxfit, 0, 1);
 
-      if( iRandValue <= this.element[ iRand ].fitness){
+      if( iRandValue < iFitness){
         return this.element[ iRand ];
       }
 
